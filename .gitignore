@@ -1,0 +1,27 @@
+# ── Node ──────────────────────────────────────────────
+node_modules/
+dist/
+
+# ── Environment variables ─────────────────────────────
+.env
+.env.local
+!.env.production
+!.env.example
+
+# ── Build artifacts ───────────────────────────────────
+build_err.log
+err.txt
+err_log.txt
+err_log_utf8.txt
+
+# ── IDE / Editor ──────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
