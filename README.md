@@ -1,150 +1,86 @@
 # SchemaIQ — AI Data Intelligence Platform
 
-> Team Kaizen · Code Apex Hackathon · Track 2: AI Agents
+A premium React + Vite frontend for the SchemaIQ AI-powered database intelligence platform. 
 
-A premium React + Vite + Tailwind v4 frontend for the SchemaIQ AI-powered database intelligence platform.
+This repository contains the Single Page Application (SPA) that interfaces with the SchemaIQ Python Backend to provide automated schema exploration, data quality profiling, natural language querying, and intelligent architectural insights. Manual database documentation and profiling are time-consuming; SchemaIQ automates these workflows for data analysts, database administrators, and data engineers.
 
----
+**Live Deployment**: [https://schemaiq.netlify.app/](https://schemaiq.netlify.app/)
+
+## ✨ Features
+
+- **Database Connections Management**: Connect via URL, form builder, or file upload. Supported sources include **PostgreSQL, MySQL, CSV files, and SQL queries**.
+- **Schema Explorer & Interactive ER Diagrams**: Browse tables and columns, and visualize relationships with Modern and Classic (Chen) views.
+- **AI-generated Data Dictionary**: Automatic documentation with searchable tabs and PDF export capabilities.
+- **Data Quality Profiling**: Visual health metrics and heatmaps for completeness, consistency, and foreign key integrity.
+- **AI Agents Pipeline**: Track the status, live logs, and progress of backend AI agents.
+- **QueryBot**: Natural language to SQL generation with automated charting and visualizations.
+- **Architectural Insights**: AI-generated analysis of schema design and optimization recommendations.
+
+## 🏗 Architecture
+
+The application is structured to enforce separation of concerns:
+- **Pages**: Dedicated views (`/dashboard`, `/connections`, `/schema`, `/querybot`, etc.).
+- **Shared UI Components**: Reusable panels, metric cards, buttons, and layout wrappers.
+- **Visualizations**: Specialized components for rendering data structures (`ERDiagram` using D3.js, `ClassicERDiagram`).
+- **Data Layer**: API connectors (`chatEngine.js`, `db.js`) to communicate with the REST backend.
+- **State Management**: React Context (`AuthContext`) for authentication and session state.
 
 ## 🚀 Quick Start
+
+### Prerequisites
+- Node.js installed on your machine.
+- The SchemaIQ Python Backend API running locally or accessible via URL. (Remote backend instance: `https://schemaiq-backend-1.onrender.com`)
 
 ### 1. Install dependencies
 ```bash
 npm install
 ```
 
-### 2. Start the dev server
+### 2. Configure Environment Variables
+By default, the application connects to the backend at `http://localhost:8001`. To connect to the production backend, set the `VITE_API_URL` environment variable. There are no other required environment variables.
+
+Create a `.env` file or export it in your shell:
+```env
+VITE_API_URL=https://schemaiq-backend-1.onrender.com
+```
+
+### 3. Start the dev server
 ```bash
 npm run dev
 ```
 
-### 3. Open in browser
+### 4. Build for Production
+To create a static production build in the `dist/` folder and preview it locally:
+```bash
+npm run build
+npm run preview
 ```
-http://localhost:5173
-```
 
-> The frontend expects the backend API at `http://localhost:8001` by default.
-> Set `VITE_API_URL` env var to override (e.g. for production).
-
----
-
-## 🔑 Login Credentials
+## 🔑 Demo Login Credentials
 
 | Role | Email | Password |
 |------|-------|----------|
 | **Admin** | `admin@schemaiq.ai` | `Kaizen@2025` |
-| Analyst | `analyst@schemaiq.ai` | `Analyst@123` |
+| **Analyst** | `analyst@schemaiq.ai` | `Analyst@123` |
 
----
+## 🚢 Deployment
 
-## 📄 Pages
+This frontend is configured for rapid deployment on **Netlify**. A `netlify.toml` file is included in the repository for auto-configuration, which handles SPA routing and `[[redirects]]`.
 
-| Route | Page |
-|-------|------|
-| `/login` | Admin login with demo credentials |
-| `/` | Dashboard — metrics, agents status, quality ring |
-| `/connections` | DB connections — URL, form builder, file upload |
-| `/schema` | Schema Explorer — browse tables and columns |
-| `/er-diagram` | Interactive ER Diagram — Modern + Classic views |
-| `/dictionary` | AI Data Dictionary — tabbed, searchable, PDF export |
-| `/quality` | Data Quality — heatmap, completeness, FK integrity |
-| `/agents` | AI Agents — pipeline view, live log, status cards |
-| `/querybot` | QueryBot — natural language → SQL → charts |
-| `/insights` | Architectural Insights — AI-generated analysis |
-| `/settings` | Settings — models, agents, export, notifications |
+1. Create a New Site on Netlify and connect this repository.
+2. Set the build environment variable `VITE_API_URL` to your backend URL (e.g., `https://schemaiq-backend-1.onrender.com`).
+3. Netlify will build using `npm run build` and serve from the `dist/` directory automatically.
 
----
+## 🔧 Tech Stack
 
-## 🏗 Tech Stack
+- **UI Framework**: React 18
+- **Build Tool**: Vite 5
+- **Styling**: Tailwind CSS v4 (`@tailwindcss/vite`)
+- **Routing**: React Router v6
+- **Data Visualization**: Recharts, D3.js (force-directed + Peter Chen)
+- **PDF Export**: jsPDF + jspdf-autotable + html2canvas
+- **Icons**: Lucide React
 
-| Layer | Technology |
-|-------|-----------|
-| UI Framework | **React 18** |
-| Build Tool | **Vite 5** |
-| Styling | **Tailwind CSS v4** (`@tailwindcss/vite`) |
-| Routing | **React Router v6** |
-| Charts | **Recharts** |
-| ER Diagrams | **D3.js** (force-directed + Peter Chen) |
-| PDF Export | **jsPDF + jspdf-autotable + html2canvas** |
-| Icons | **Lucide React** |
+## 🧪 Testing
 
----
-
-## 🔧 Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `VITE_API_URL` | Backend API base URL | `http://localhost:8001` |
-
-For production builds, set this in `.env.production` or as a Netlify build variable.
-
----
-
-## 🚢 Deploy to Netlify
-
-This repo includes `netlify.toml` for auto-configuration.
-
-1. Create a **New Site** on Netlify
-2. Connect this repo
-3. Set build environment variable:
-   - `VITE_API_URL` = your Render backend URL (e.g. `https://schemaiq-backend.onrender.com`)
-4. Netlify auto-detects `netlify.toml` — builds with `npm run build`, serves from `dist/`
-
-SPA routing is pre-configured via `[[redirects]]` in `netlify.toml`.
-
----
-
-## 🔨 Build for Production
-
-```bash
-npm run build
-npm run preview   # local preview of production build
-```
-
-The `dist/` folder contains the static build ready for deployment.
-
----
-
-## 📁 Project Structure
-
-```
-├── index.html                  # Vite entry point
-├── vite.config.js              # Vite + Tailwind config
-├── netlify.toml                # Netlify deployment config
-├── package.json
-├── .env.production             # Production API URL
-├── public/
-│   └── schemaiqlogo.png        # Logo asset
-└── src/
-    ├── main.jsx                # React entry
-    ├── App.jsx                 # Router + auth guard
-    ├── config.js               # Centralized API_BASE URL
-    ├── index.css               # Tailwind v4 + custom tokens
-    ├── context/
-    │   └── AuthContext.jsx     # Login state
-    ├── data/
-    │   ├── db.js               # Static reference data
-    │   └── chatEngine.js       # QueryBot API connector
-    ├── components/
-    │   ├── ui.jsx              # Shared UI components
-    │   ├── Sidebar.jsx         # Navigation sidebar
-    │   ├── Topbar.jsx          # Top header bar
-    │   ├── Layout.jsx          # Page wrapper
-    │   ├── ERDiagram.jsx       # Modern D3 ER diagram
-    │   └── ClassicERDiagram.jsx # Peter Chen ER diagram
-    ├── utils/
-    │   ├── schemaToGraph.js    # Schema → D3 graph converter
-    │   └── qualityMetrics.js   # Quality score calculator
-    └── pages/
-        ├── LoginPage.jsx       # Login page
-        ├── Dashboard.jsx       # Main dashboard
-        ├── QueryBotPage.jsx    # AI chatbot
-        ├── SchemaPage.jsx      # Schema Explorer
-        ├── InsightsPage.jsx    # AI Insights
-        └── OtherPages.jsx      # ER, Dictionary, Quality,
-                                # Agents, Connections, Settings
-```
-
----
-
-*Built by Team Kaizen for Code Apex — Track 2: AI Agents*
+*Note: There are currently no automated unit or integration tests present in the frontend repository.*
